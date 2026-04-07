@@ -1,0 +1,16 @@
+{
+  "name": "finguard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FinGuard — Adversarial Consensus Engine for financial decision-making",
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "cd apps/server && npx tsx src/test.ts",
+    "clean": "pnpm -r exec rm -rf dist .tsbuildinfo"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
