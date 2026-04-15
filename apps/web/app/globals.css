@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-card: #0f1629;
+  --bg-card-hover: #111827;
+  --bg-advocate: #0a1f0a;
+  --bg-challenger: #1f0a0a;
+  --bg-arbitrator: #0a0f1f;
+  --accent-primary: #2563eb;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+  --accent-success: #22c55e;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-mono: #e2e8f0;
+  --border: #1e293b;
+  --border-active: #2563eb;
+  --border-advocate: #22c55e;
+  --border-challenger: #ef4444;
+  --border-arbitrator: #2563eb;
+  --border-warning: #f59e0b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg-primary); }
+body { color: var(--text-primary); font-family: var(--font-inter), sans-serif; }
+
+.font-display { font-family: var(--font-syne), sans-serif; }
+.font-mono { font-family: var(--font-jetbrains-mono), monospace; }
+
+/* Every number must be monospace */
+.score-display { font-family: var(--font-jetbrains-mono), monospace; font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; }
+.delta-display { font-family: var(--font-jetbrains-mono), monospace; font-size: 1.25rem; font-weight: 500; }
+.id-display { font-family: var(--font-jetbrains-mono), monospace; font-size: 0.75rem; color: var(--text-secondary); }
+
+/* Card base */
+.finguard-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; }
+.advocate-card { background: var(--bg-advocate); border-left: 3px solid var(--accent-success); }
+.challenger-card { background: var(--bg-challenger); border-left: 3px solid var(--accent-danger); }
+.arbitrator-card { background: var(--bg-arbitrator); border-left: 3px solid var(--accent-primary); }
+.escalation-card { background: #1f1500; border-left: 3px solid var(--accent-warning); }
+
+/* Verdict badges */
+.badge-approved { background: #14532d; color: #22c55e; border: 1px solid #22c55e; font-family: var(--font-jetbrains-mono), monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; letter-spacing: 0.1em; }
+.badge-rejected { background: #450a0a; color: #ef4444; border: 1px solid #ef4444; font-family: var(--font-jetbrains-mono), monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; letter-spacing: 0.1em; }
+.badge-escalated { background: #451a00; color: #f59e0b; border: 1px solid #f59e0b; font-family: var(--font-jetbrains-mono), monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; letter-spacing: 0.1em; }
+.badge-mock { background: #1e1b4b; color: #818cf8; border: 1px solid #818cf8; font-family: var(--font-jetbrains-mono), monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; letter-spacing: 0.1em; }
