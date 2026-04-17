@@ -3,13 +3,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, GitMerge, FileText, UserCheck, Activity } from 'lucide-react'
+import { LayoutDashboard, GitMerge, FileText, UserCheck, Activity, Wand2 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Workflows', href: '/workflows', icon: GitMerge },
   { name: 'Decision Log', href: '/decisions', icon: FileText },
   { name: 'Human Review', href: '/review', icon: UserCheck },
+  { name: 'Workflow Studio', href: '/studio', icon: Wand2 },
 ]
 
 export function Sidebar() {

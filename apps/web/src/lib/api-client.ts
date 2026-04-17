@@ -24,66 +24,75 @@ export async function runWorkflow(
   workflowType: WorkflowType,
   input: WorkflowInput
 ): Promise<RunWorkflowResponse> {
-  await delay()
-
-  // Return specific mock responses based on workflow_type to demonstrate different flows
-  let result;
-
-  if (workflowType === 'loan') {
-    // Arbitrary switch based on input keys/values to show different outcomes
-    if ('cibil_score' in input && (input as any).cibil_score < 600) {
-      // In real scenario this would be handled differently, we'll just mock it
-      result = mockLoanEscalated
-    } else {
-      result = mockLoanApproved
-    }
-  } else if (workflowType === 'fraud') {
-    result = mockFraudEscalated
-  } else {
-    // Default fallback
-    result = mockLoanApproved 
+  const res = await fetch('http://localhost:4000/api/workflow/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ workflow_type: workflowType, input: input })
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to run workflow on backend');
   }
 
-  const decision_id = `dec-${Math.random().toString(36).substr(2, 9)}`
+  const payload = await res.json();
+  const decision_id = payload.data?.decision_id || `dec-${Math.random().toString(36).substr(2, 9)}`;
+  const result = payload.data?.result || payload.data;
 
-  return { decision_id, result }
+  return { decision_id, result };
 }
 
 export async function getDecisions(
   workflowType?: WorkflowType,
   verdict?: string
 ): Promise<GetDecisionsResponse> {
-  await delay()
-  
-  let filteredLogs = mockDecisionLogs;
-  
+  const url = new URL('http://localhost:4000/api/decisions');
   if (workflowType && workflowType !== 'all') {
-    filteredLogs = filteredLogs.filter(log => log.workflow_type === workflowType)
+    url.searchParams.append('workflow_type', workflowType);
   }
-  
   if (verdict && verdict !== 'all') {
-    filteredLogs = filteredLogs.filter(log => log.final_status === verdict)
+    url.searchParams.append('verdict', verdict);
   }
 
-  return {
-    decisions: filteredLogs,
-    total: filteredLogs.length
+  const res = await fetch(url.toString(), {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch decisions');
   }
+
+  const payload = await res.json();
+  return payload.data;
 }
 
 export async function getPendingReviews(): Promise<PendingReviewItem[]> {
-  await delay()
-  return mockPendingReviews
+  const res = await fetch('http://localhost:4000/api/review/pending', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch pending reviews');
+  }
+
+  const payload = await res.json();
+  return payload.data;
 }
 
 export async function submitHumanReview(
   req: SubmitHumanReviewRequest
 ): Promise<SubmitHumanReviewResponse> {
-  await delay()
-  
-  // Just simulate success
-  return {
-    decision_id: req.decision_id,
-    updated_status: req.human_verdict === 'approve' ? 'approved' : 'rejected'
+  const res = await fetch('http://localhost:4000/api/review/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(req),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to submit review');
   }
+
+  const payload = await res.json();
+  return payload.data;
 }

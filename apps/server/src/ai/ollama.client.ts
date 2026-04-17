@@ -43,7 +43,8 @@ export class OllamaClient {
    * Retries up to MAX_RETRIES times with exponential backoff.
    * @returns The generated text, or null if all retries fail.
    */
-  async generate(prompt: string): Promise<string | null> {
+  async generate(prompt: string, overrideModel?: string): Promise<string | null> {
+    const targetModel = overrideModel || this.model;
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
       const startTime = Date.now();
 
@@ -55,7 +56,7 @@ export class OllamaClient {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: this.model,
+            model: targetModel,
             prompt,
             stream: false,
             format: 'json',
@@ -131,7 +132,7 @@ export class OllamaClient {
 
 /** Singleton Ollama client instance. */
 export const ollamaClient = new OllamaClient(
-  OLLAMA_BASE_URL,
-  OLLAMA_MODEL,
-  OLLAMA_TIMEOUT_MS
+  process.env['OLLAMA_BASE_URL'] || OLLAMA_BASE_URL,
+  process.env['OLLAMA_MODEL'] || OLLAMA_MODEL,
+  parseInt(process.env['OLLAMA_TIMEOUT_MS'] || '120000', 10) // Give Qwen 2 minutes to generate complex workflows
 );

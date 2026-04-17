@@ -7,7 +7,10 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "test": "cd apps/server && npx tsx src/test.ts",
-    "dev:server": "pnpm --filter @finguard/server dev",
+    "dev:server": "cd apps/server && node --env-file=../../.env --import tsx src/index.ts",
+    "dev:web": "cd apps/web && pnpm dev",
+    "dev:all": "npx concurrently \"pnpm run dev:server\" \"pnpm run dev:web\"",
+    "db:seed": "cd apps/server && node --env-file=../../.env --import tsx src/db/seed.ts",
     "clean": "pnpm -r exec rm -rf dist .tsbuildinfo"
   },
   "engines": {

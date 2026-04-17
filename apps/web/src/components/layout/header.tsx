@@ -27,8 +27,8 @@ export function Header() {
     return 'FinGuard'
   }
 
-  // Assuming mock mode for now since the API isn't fully ready
-  const isMockMode = true 
+  // System is now fully live and connected to backend
+  const isMockMode = false 
 
   return (
     <header className="h-16 border-b border-border bg-background flex items-center justify-between px-8">

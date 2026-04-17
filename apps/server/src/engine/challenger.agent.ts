@@ -23,14 +23,16 @@ export async function runChallenger(
   const startTime = Date.now();
 
   const prompt = buildChallengerPrompt(workflowType, input);
-  const rawResponse = await ollamaClient.generate(prompt);
+  const targetModel = process.env['CHALLENGER_MODEL'];
+  const rawResponse = await ollamaClient.generate(prompt, targetModel);
 
   if (rawResponse === null) {
     return buildMockOutput(workflowType, startTime);
   }
 
   try {
-    const parsed = JSON.parse(rawResponse) as Record<string, unknown>;
+    const cleaned = rawResponse.replace(/```json\s*/, '').replace(/```\s*$/, '').trim();
+    const parsed = JSON.parse(cleaned) as Record<string, unknown>;
     const result = validateAndBuildArgument(parsed);
 
     return {
@@ -39,7 +41,7 @@ export async function runChallenger(
       input_hash: '',
       result,
       processing_time_ms: Date.now() - startTime,
-      model: OLLAMA_MODEL,
+      model: targetModel || OLLAMA_MODEL,
       is_mock: false,
     };
   } catch (error: unknown) {

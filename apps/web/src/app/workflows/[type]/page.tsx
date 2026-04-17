@@ -16,6 +16,7 @@ export default function WorkflowExecutionPage() {
 
   const [inputData, setInputData] = useState<any>({
     cibil_score: 700, // default good path
+    monthly_income_inr: 150000,
     amount: 50000,
   })
 
@@ -41,7 +42,7 @@ export default function WorkflowExecutionPage() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-syne text-muted-foreground uppercase">Monthly Income (INR)</label>
-            <input type="number" className="bg-background border border-border p-3 rounded font-mono-jetbrains text-foreground focus:border-primary focus:ring-1 outline-none" defaultValue={150000} />
+            <input type="number" className="bg-background border border-border p-3 rounded font-mono-jetbrains text-foreground focus:border-primary focus:ring-1 outline-none" value={inputData.monthly_income_inr} onChange={e => setInputData({...inputData, monthly_income_inr: Number(e.target.value)})} />
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-syne text-muted-foreground uppercase">CIBIL Score</label>
@@ -55,7 +56,7 @@ export default function WorkflowExecutionPage() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-syne text-muted-foreground uppercase">Loan Amount (INR)</label>
-            <input type="number" className="bg-background border border-border p-3 rounded font-mono-jetbrains text-foreground focus:border-primary focus:ring-1 outline-none" defaultValue={2000000} />
+            <input type="number" className="bg-background border border-border p-3 rounded font-mono-jetbrains text-foreground focus:border-primary focus:ring-1 outline-none" value={inputData.amount} onChange={e => setInputData({...inputData, amount: Number(e.target.value)})} />
           </div>
         </>
       )

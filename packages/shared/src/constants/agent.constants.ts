@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 
 /** Default Ollama model identifier. */
-export const OLLAMA_MODEL = 'mistral:7b';
+export const OLLAMA_MODEL = 'qwen2.5';
 
 /** Ollama API base URL. */
 export const OLLAMA_BASE_URL = 'http://localhost:11434';

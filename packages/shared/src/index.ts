@@ -14,6 +14,8 @@ export type {
 
 export { toConfidenceScore } from './types/agent.types.js';
 
+export * from './types/dynamic.types.js';
+
 export type {
   WorkflowType,
   FraudInput,

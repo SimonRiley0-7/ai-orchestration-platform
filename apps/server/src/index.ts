@@ -24,6 +24,7 @@ import type { ApiResponse } from '@finguard/shared';
 import { workflowRouter } from './routes/workflow.routes.js';
 import { decisionsRouter } from './routes/decisions.routes.js';
 import { reviewRouter } from './routes/review.routes.js';
+import studioRouter from './routes/studio.routes.js';
 
 // ── App initialization ───────────────────────────────────────
 
@@ -53,6 +54,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
 app.use('/api/workflow', workflowRouter);
 app.use('/api/decisions', decisionsRouter);
 app.use('/api/review', reviewRouter);
+app.use('/api/studio', studioRouter);
 
 // ── Global error handler ─────────────────────────────────────
 
@@ -77,7 +79,8 @@ app.listen(PORT, () => {
   console.log(`   ├── GET  /api/decisions`);
   console.log(`   ├── GET  /api/decisions/:id`);
   console.log(`   ├── GET  /api/review/pending`);
-  console.log(`   └── POST /api/review/submit`);
+  console.log(`   ├── POST /api/review/submit`);
+  console.log(`   └── POST /api/studio/generate`);
 });
 
 export default app;
